@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_horizontal" >
+
+
+
+    <LinearLayout
+        android:id="@+id/fram_button_0"
+        android:orientation="vertical"
+        android:layout_width="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="3dp"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentLeft="true"
+        >
+        <View
+            android:id="@+id/topbar_button_0"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFF"
+            />
+
+        <ImageButton
+            android:id="@+id/action_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+
+            android:adjustViewBounds="true"
+            android:background="@drawable/pressed_mask"
+            android:src="@drawable/peeps_white" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/fram_button_1"
+        android:orientation="vertical"
+        android:layout_width="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="36dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/fram_button_0"
+
+        >
+        <View
+            android:id="@+id/topbar_button_1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFF"
+            />
+
+        <ImageButton
+            android:id="@+id/action_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+
+            android:adjustViewBounds="true"
+            android:background="@drawable/pressed_mask"
+            android:src="@drawable/building_gray" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/fram_button_2"
+        android:orientation="vertical"
+        android:layout_width="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="16dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/fram_button_1"
+
+        >
+        <View
+            android:id="@+id/topbar_button_2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFF"
+            />
+
+        <ImageButton
+            android:id="@+id/action_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/pressed_mask"
+            android:src="@drawable/filter" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/fram_button_3"
+        android:orientation="vertical"
+        android:layout_width="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        >
+        <View
+            android:id="@+id/topbar_button_3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFF"
+            />
+
+        <ImageButton
+            android:id="@+id/action_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+
+            android:adjustViewBounds="true"
+            android:background="@drawable/pressed_mask"
+            android:src="@drawable/search_world_white" />
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

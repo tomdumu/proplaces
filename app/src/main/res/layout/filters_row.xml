@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ff363636"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/fitler_1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff363636"
+        android:orientation="vertical"
+
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/activatedBackgroundIndicator"
+            android:orientation="horizontal"
+
+
+            >
+
+            <View
+
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="#ff1c5bb3"
+                ></View>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:ellipsize="end"
+
+                    android:gravity="center|left"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:text="Food"
+                    android:textColor="@color/light_grey"
+                    android:textSize="18sp"
+
+
+                    />
+           </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ff000000"
+        ></View>
+
+    <LinearLayout
+        android:id="@+id/fitler_2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff363636"
+        android:orientation="vertical"
+
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/activatedBackgroundIndicator"
+            android:orientation="horizontal"
+
+
+            >
+
+            <View
+
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="#ffb90007"
+                ></View>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:ellipsize="end"
+
+                    android:gravity="center|left"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:text="Sports"
+                    android:textColor="@color/light_grey"
+                    android:textSize="18sp"
+
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ff000000"
+        ></View>
+
+
+    <LinearLayout
+        android:id="@+id/fitler_3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff363636"
+        android:orientation="vertical"
+
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/activatedBackgroundIndicator"
+            android:orientation="horizontal"
+
+
+            >
+
+            <View
+
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="#ff8c6d06"
+                ></View>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:ellipsize="end"
+
+                    android:gravity="center|left"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:text="Culture"
+                    android:textColor="@color/light_grey"
+                    android:textSize="18sp"
+
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ff000000"
+        ></View>
+
+
+
+</LinearLayout>

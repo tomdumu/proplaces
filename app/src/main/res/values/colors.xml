@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="green">#ff00897b</color>
+    <color name="green_back">#5000ffe5</color>
+    <color name="green_light">#00897B</color>
+    <color name="green_dark">#ff00413c</color>
+    <color name="purple">#ff7e44ff</color>
+    <color name="purple_dark">#ff321858</color>
+    <color name="purple_deep">#ff110d2a</color>
+    <color name="orange">#ffa7550b</color>
+    <color name="orange_back">#67ff8a0d</color>
+    <color name="orange_dark">#ff45020a</color>
+    <color name="ColorPrimaryDark">#00695C</color>
+    <color name="tabsScrollColor">#ff000000</color>
+    <color name="black">#ff000000</color>
+    <color name="dark_gray">#7a000000</color>
+    <color name="shadow_left">#9d040404</color>
+    <color name="ColorPrimary">#00897B</color>
+    <color name="white">#FFF</color>
+    <color name="shadow_gray">#70ffffff</color>
+
+
+    <color name="dark_grey">#181818</color>
+
+
+    <color name="light_grey">#ffbababa</color>
+
+
+    <color name="blue">#ff1118ff</color>
+    <color name="light_blue">#110000FF</color>
+    <color name="light_green">#1100FF00</color>
+    <color name="turquoise">#ff22e9ff</color>
+    <color name="turquoise_dark">#ff1cb6c7</color>
+    <color name="flat_blue">#e31a51f4</color>
+
+
+</resources>

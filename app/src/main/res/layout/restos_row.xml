@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:background="@color/purple_dark"
+
+
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+
+
+        >
+
+        <View
+            android:id="@+id/list_tab"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/green"
+            ></View>
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/list_niv"
+            android:layout_width="94dp"
+            android:layout_height="94dp"
+            android:layout_margin="2dp"
+            android:src="@drawable/gear_dark"
+            android:scaleType="fitXY" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+
+            >
+
+        <TextView
+            android:id="@+id/list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="top|left"
+            android:textColor="@color/white"
+            android:text="name text"
+            android:paddingLeft="10dp"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+
+
+            />
+
+            <TextView
+                android:id="@+id/list_city"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:gravity="bottom|left"
+                android:textColor="@color/white"
+                android:text="city text"
+
+                android:textSize="12sp"
+                android:ellipsize="end"
+                android:maxLines="2"
+
+
+                />
+        <!--<View-->
+
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_margin="8dp"-->
+
+            <!--/>-->
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#333"/>
+
+</LinearLayout>

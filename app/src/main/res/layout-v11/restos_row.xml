@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
+              android:background="@color/purple_dark"
+
+
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:background="?android:attr/activatedBackgroundIndicator"
+
+
+        >
+
+        <View
+            android:id="@+id/list_tab"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/green"
+            ></View>
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/list_niv"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_margin="2dp"
+            android:src="@drawable/gear"
+            android:scaleType="fitXY" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="78dp"
+
+
+            >
+
+            <TextView
+                android:id="@+id/list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="top|left"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:text="name text"
+                android:paddingLeft="10dp"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+
+
+                />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="28dp"
+                android:paddingLeft="10dp"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                >
+                <TextView
+                    android:id="@+id/list_address"
+                    android:layout_width="0dp"
+                    android:layout_weight="60"
+                    android:layout_height="28dp"
+                    android:paddingLeft="4dp"
+
+                    android:gravity="top|left"
+                    android:textColor="@color/light_grey"
+                    android:text="123 Main Street Suite 2s "
+
+                    android:textSize="12sp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+
+
+                    />
+            <TextView
+                android:id="@+id/list_city"
+                android:layout_width="0dp"
+                android:layout_weight="40"
+                android:layout_height="28dp"
+                android:paddingLeft="10dp"
+
+                android:gravity="top|left"
+                android:textColor="@color/light_grey"
+                android:text="city text"
+
+                android:textSize="12sp"
+                android:ellipsize="end"
+                android:maxLines="2"
+
+
+                />
+
+            <!--<View-->
+
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_margin="8dp"-->
+
+            <!--/>-->
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#333"/>
+
+</LinearLayout>
