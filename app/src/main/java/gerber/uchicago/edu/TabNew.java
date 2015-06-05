@@ -18,12 +18,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,13 +48,13 @@ public class TabNew extends Fragment {
     private ScrollView mRootViewGroup;
     private EditText mNameField, mCityField, mAddressField, mPhoneField, mYelpField;
     private TextView mPhoneText, mAddressText, mYelpText;
-    private TextView mCategory;
+    private Spinner mCategory;
     private Button mExtractButton, mSaveButton, mCancelButton;
-    private CheckBox mCheckFavorite;
-    private View mViewFavorite;
     private ImageView mPhotoView;
     private MainActivity main;
     private CategoryManager categoryManger;
+    private String[] mCategories;
+    private String mCategoryString;
 
     //the restaurant passed into this activity during edit operation
     private Restaurant mRestaurant;
@@ -75,6 +78,14 @@ public class TabNew extends Fragment {
         this.mYelpTaskCallback = yelpTaskCallback;
     }
 
+    private int findPositionGivenCode(String code, String[] categories){
+        for(int i = 0; i < categories.length; i++){
+            if(categories[i].equalsIgnoreCase(code)){
+                return i;
+            }
+        }
+        return 0;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -124,7 +135,7 @@ public class TabNew extends Fragment {
                     toast.show();
                 } else {
                     Restaurant restoNew = new Restaurant(
-                            mCheckFavorite.isChecked() ? 1 : 0,
+                            mCategories[mCategory.getSelectedItemPosition()],
                             mNameField.getText().toString(),
                             mCityField.getText().toString(),
                             mAddressField.getText().toString(),
@@ -133,7 +144,6 @@ public class TabNew extends Fragment {
                             mStrImageUrl
                     );
                     mDbAdapter.createResto(restoNew);
-                    mCheckFavorite.setChecked(false);
                     mNameField.setText("");
                     mCityField.setText("");
                     mAddressField.setText("");
@@ -150,13 +160,6 @@ public class TabNew extends Fragment {
                 }
             }
         });
-        mCheckFavorite = (CheckBox) v.findViewById(R.id.check_favorite);
-        mCheckFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                toggleFavoriteView(isChecked);
-            }
-        });
         mCancelButton = (Button) v.findViewById(R.id.cancel_action_button);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,22 +168,57 @@ public class TabNew extends Fragment {
                 main.goToTab(0);
             }
         });
-        mViewFavorite = v.findViewById(R.id.view_favorite);
-        mViewFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCheckFavorite.isChecked()) {
-                    mCheckFavorite.setChecked(false);
-                } else {
-                    mCheckFavorite.setChecked(true);
-                }
-            }
-        });
+
         mPhoneText = (TextView) v.findViewById(R.id.text_phone);
         mYelpText = (TextView) v.findViewById(R.id.text_yelp);
         mAddressText = (TextView) v.findViewById(R.id.text_address);
 
-        mCategory = (TextView) v.findViewById(R.id.text_category);
+        mCategory = (Spinner) v.findViewById(R.id.text_category);
+        mCategories = new String[10];
+        mCategories[0] = "Food";
+        mCategories[1] = "Sports";
+        mCategories[2] = "Nature";
+        mCategories[3] = "Culture";
+        mCategories[4] = "Arts";
+        mCategories[5] = "Nightlife";
+        mCategories[6] = "Shopping";
+        mCategories[7] = "Services";
+        mCategories[8] = "Travel";
+        mCategories[9] = "Other";
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+
+                //context
+                getActivity(),
+                //view: layout you see when the spinner is closed
+                R.layout.spinner_closed,
+                //model: the array of Strings
+                mCategories
+        );
+        arrayAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+
+        mCategory.setAdapter(arrayAdapter);
+        mCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (parent.getId()) {
+
+                    case R.id.text_category:
+                        //define behavior here
+                        //PrefsMgr.setString(this, FOR, extractCodeFromCurrency((String)mForSpinner.getSelectedItem()));
+                        mCategoryString = mCategories[mCategory.getSelectedItemPosition()];
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         mPhoneText.setEnabled(false);
         mPhoneText.setOnClickListener(new DetailsEditWatcher());
@@ -200,7 +238,7 @@ public class TabNew extends Fragment {
         mRootViewGroup.setBackgroundColor(getResources().getColor(R.color.light_green));
 
         //the default on new restaurant is non-favorite
-        toggleFavoriteView(false);
+       // toggleFavoriteView(false);
 
         //if this is a new record then set the save button to disabled and extract button to gone
         mSaveButton.setEnabled(false);
@@ -214,14 +252,14 @@ public class TabNew extends Fragment {
             mAddressField.setText(mRestaurant.getAddress());
             mPhoneField.setText(PhoneNumberUtils.formatNumber(mRestaurant.getPhone()));
             mYelpField.setText(mRestaurant.getYelp());
-            mCheckFavorite.setChecked(mRestaurant.getFavorite() == 1);
+            mCategory.setSelection(findPositionGivenCode(mRestaurant.getCategory(), mCategories));
             //change the "save" button label to "update"
             mSaveButton.setText("Update");
 
             //set the root view group to light blue to indicate editing
             mRootViewGroup.setBackgroundColor(getResources().getColor(R.color.light_blue));
             //toggle the color view green or orange
-            toggleFavoriteView(mCheckFavorite.isChecked());
+          //  toggleFavoriteView(mCheckFavorite.isChecked());
 
             //if this is a edit record then set the save button to enabled and extract button to visible
             mSaveButton.setEnabled(true);
@@ -239,7 +277,7 @@ public class TabNew extends Fragment {
     }
 
 
-    private void toggleFavoriteView(boolean bFavorite) {
+    /*private void toggleFavoriteView(boolean bFavorite) {
         if (bFavorite) {
             mViewFavorite.setBackgroundColor(getResources().getColor(R.color.orange));
         } else {
@@ -247,7 +285,7 @@ public class TabNew extends Fragment {
         }
 
     }
-
+*/
     public YelpResultsData getYelpResultsData() {
         return mYelpResultsData;
     }
@@ -510,7 +548,7 @@ public class TabNew extends Fragment {
                         mAddressField.setText(biz.location.address.get(0));
                         mPhoneField.setText(PhoneNumberUtils.formatNumber(biz.phone));
                         mYelpField.setText(biz.url);
-                        mCategory.setText(categoryManger.getCategoryFromYelpCat(biz.categories.get(0).get(1)));
+                        mCategory.setSelection(findPositionGivenCode(categoryManger.getCategoryFromYelpCat(biz.categories.get(0).get(1)), mCategories));
 
                     } catch (Exception e) {
                         e.printStackTrace();

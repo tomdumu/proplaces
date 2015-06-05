@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class RestosDbAdapter {
 
     public static final String COL_ID = "_id";
-    public static final String COL_FAV = "fav";
+    public static final String COL_CAT = "cat";
     public static final String COL_NAME = "name";
     public static final String COL_CITY = "city";
     public static final String COL_ADDRESS = "address";
@@ -29,12 +29,12 @@ public class RestosDbAdapter {
     public static final String COL_IMG_URL = "img_url";
 
     public static final String SORT_NAME_ASC = COL_NAME + " ASC";
-    public static final String SORT_FAV_DESC = COL_FAV + " DESC";
+    public static final String SORT_FAV_DESC = COL_CAT + " DESC";
     public static final String SORT_NONE = null;
 
 
     public static final int INDEX_ID = 0;
-    public static final int INDEX_FAV = INDEX_ID + 1;
+    public static final int INDEX_CAT = INDEX_ID + 1;
     public static final int INDEX_NAME = INDEX_ID + 2;
     public static final int INDEX_CITY = INDEX_ID + 3;
     public static final int INDEX_ADDRESS = INDEX_ID + 4;
@@ -55,7 +55,7 @@ public class RestosDbAdapter {
     private static final String DATABASE_CREATE =
             "CREATE TABLE if not exists " + SQLITE_TABLE + " ( " +
                     COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
-                    COL_FAV + " INTEGER," +
+                    COL_CAT + " TEXT, " +
                     COL_NAME + " TEXT not null, " +
                     COL_CITY + " TEXT not null, " +
                     COL_ADDRESS + " TEXT, " +
@@ -87,7 +87,7 @@ public class RestosDbAdapter {
 
         ContentValues values = new ContentValues();
 
-        values.put(COL_FAV, resto.getFavorite());
+        values.put(COL_CAT, resto.getCategory());
         values.put(COL_NAME, resto.getName());
         values.put(COL_CITY, resto.getCity());
         values.put(COL_ADDRESS, resto.getAddress());
@@ -105,7 +105,7 @@ public class RestosDbAdapter {
     //READ
     public Restaurant fetchRestoById(int id) {
 
-        Cursor cursor = mDb.query(SQLITE_TABLE, new String[]{COL_ID, COL_FAV,
+        Cursor cursor = mDb.query(SQLITE_TABLE, new String[]{COL_ID, COL_CAT,
                         COL_NAME, COL_CITY, COL_ADDRESS, COL_PHONE, COL_YELP, COL_IMG_URL}, COL_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null
         );
@@ -114,7 +114,7 @@ public class RestosDbAdapter {
 
         Restaurant resto = new Restaurant(
                 cursor.getInt(INDEX_ID),
-                cursor.getInt(INDEX_FAV),
+                cursor.getString(INDEX_CAT),
                 cursor.getString(INDEX_NAME),
                 cursor.getString(INDEX_CITY),
                 cursor.getString(INDEX_ADDRESS),
@@ -129,7 +129,7 @@ public class RestosDbAdapter {
 
     public Cursor fetchAllRestos(String strSort) {
 
-        Cursor mCursor = mDb.query(SQLITE_TABLE, new String[]{COL_ID, COL_FAV,
+        Cursor mCursor = mDb.query(SQLITE_TABLE, new String[]{COL_ID, COL_CAT,
                         COL_NAME, COL_CITY, COL_ADDRESS, COL_PHONE, COL_YELP, COL_IMG_URL},
                 null, null, null, null, strSort
         );
@@ -148,7 +148,7 @@ public class RestosDbAdapter {
 
         ContentValues values = new ContentValues();
 
-        values.put(COL_FAV, resto.getFavorite());
+        values.put(COL_CAT, resto.getCategory());
         values.put(COL_NAME, resto.getName());
         values.put(COL_CITY, resto.getCity());
         values.put(COL_ADDRESS, resto.getAddress());
@@ -185,18 +185,18 @@ public class RestosDbAdapter {
 
 
         ArrayList<Restaurant> restos = new ArrayList<Restaurant>();
-        restos.add( new Restaurant(0, "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
-        restos.add( new Restaurant(1, "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
-        restos.add( new Restaurant(0, "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
-        restos.add( new Restaurant(0, "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
-        restos.add( new Restaurant(1, "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
-        restos.add( new Restaurant(0, "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
-        restos.add( new Restaurant(0, "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
-        restos.add( new Restaurant(1, "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
-        restos.add( new Restaurant(0, "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
-        restos.add( new Restaurant(0, "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
-        restos.add( new Restaurant(1, "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
-        restos.add( new Restaurant(0, "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
+        restos.add( new Restaurant("Food", "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
+        restos.add( new Restaurant("Food", "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
+        restos.add( new Restaurant("Food", "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
+        restos.add( new Restaurant("Food", "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
+        restos.add( new Restaurant("Food", "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
+        restos.add( new Restaurant("Food", "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
+        restos.add( new Restaurant("Food", "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
+        restos.add( new Restaurant("Food", "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
+        restos.add( new Restaurant("Food", "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
+        restos.add( new Restaurant("Food", "The Gage", "Chicago", "24 S. Michigan Ave", "3123724243", "http://www.yelp.com/biz/the-gage-chicago", "http://3.bp.blogspot.com/_fr_ZFOsr3a8/TBoSrzXzPWI/AAAAAAAAHNQ/dcm-ZfTSGgU/s1600/Gage+exterior.jpg"));
+        restos.add( new Restaurant("Food", "Stetsons Modern Steak + Sushi", "Chicago", "151 E Wacker Dr", "3122394491", "http://www.yelp.com/biz/stetsons-modern-steak-sushi-chicago-2", "http://www.opentable.com/img/pdThumbnails/1729.jpg"));
+        restos.add( new Restaurant("Food", "Cai", "Chicago", "2100 S Archer Ave", "3123266888", "http://www.yelp.com/biz/cai-chicago", "http://media.timeout.com/images/100903221/60/45/image.jpg"));
 
         for (Restaurant resto : restos) {
             createResto(resto);
@@ -216,6 +216,7 @@ public class RestosDbAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
             Log.w(TAG, DATABASE_CREATE);
+            db.execSQL("DROP TABLE IF EXISTS " + SQLITE_TABLE + ";");
             db.execSQL(DATABASE_CREATE);
         }
 

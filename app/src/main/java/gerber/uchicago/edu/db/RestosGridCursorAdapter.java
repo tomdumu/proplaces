@@ -17,7 +17,7 @@ import com.android.volley.toolbox.Volley;
 import gerber.uchicago.edu.R;
 
 /**
- * Created by jennifer1 on 5/31/15.
+ * Created by slim on 5/31/15.
  */
 public class RestosGridCursorAdapter extends SimpleCursorAdapter {
 
@@ -58,7 +58,7 @@ public class RestosGridCursorAdapter extends SimpleCursorAdapter {
             holder.nName = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_NAME);
             holder.nNiv = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_IMG_URL);
             //holder.nCity = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_CITY);
-            holder.nFav = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_FAV);
+            holder.nCat = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_CAT);
 
 
             holder.textViewName = (TextView) view.findViewById(R.id.grid_resto_name);
@@ -74,7 +74,7 @@ public class RestosGridCursorAdapter extends SimpleCursorAdapter {
         holder.networkImageView.setImageUrl(cursor.getString(holder.nNiv), mImageLoader);
 
 
-        if (cursor.getInt(holder.nFav) > 0)
+        if (cursor.getInt(holder.nCat) > 0)
             holder.viewImportant.setBackgroundColor(context.getResources().getColor(R.color.orange));
         else
             holder.viewImportant.setBackgroundColor(context.getResources().getColor(R.color.green));
@@ -86,7 +86,7 @@ public class RestosGridCursorAdapter extends SimpleCursorAdapter {
         int nName;
         int nNiv;
         //int nCity;
-        int nFav;
+        int nCat;
 
         TextView textViewName;
         NetworkImageView networkImageView;

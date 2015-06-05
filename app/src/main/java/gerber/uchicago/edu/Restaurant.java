@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Restaurant implements Serializable {
 
     private long mId;
-    private int mFavorite;
+    private String mCategory;
     private String mName;
     private String mCity;
     private String mAddress;
@@ -18,9 +18,9 @@ public class Restaurant implements Serializable {
     private String mImageUrl;
 
 
-    public Restaurant(long id, int favorite, String name, String city, String address, String phone, String yelp, String imageUrl) {
+    public Restaurant(long id, String category, String name, String city, String address, String phone, String yelp, String imageUrl) {
         mId = id;
-        mFavorite = favorite;
+        mCategory = category;
         mName = name;
         mCity = city;
         mAddress = address;
@@ -29,8 +29,8 @@ public class Restaurant implements Serializable {
         mImageUrl = imageUrl;
     }
 
-    public Restaurant(int favorite, String name, String city, String address, String phone, String yelp, String imageUrl) {
-        mFavorite = favorite;
+    public Restaurant(String category, String name, String city, String address, String phone, String yelp, String imageUrl) {
+        mCategory = category;
         mName = name;
         mCity = city;
         mAddress = address;
@@ -95,11 +95,11 @@ public class Restaurant implements Serializable {
         mYelp = yelp;
     }
 
-    public int getFavorite() {
-        return mFavorite;
+    public String getCategory() {
+        return mCategory;
     }
 
-    public void setFavorite(int favorite) {
-        mFavorite = favorite;
+    public void setCategory(String category) {
+        mCategory = category;
     }
 }

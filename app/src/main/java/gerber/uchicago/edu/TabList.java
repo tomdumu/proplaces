@@ -234,10 +234,8 @@ public class TabList extends Fragment  {
                                     strMessage += "\nAddress: " + mRestoClicked.getAddress() + ", " + mRestoClicked.getCity();
                                     strMessage += " \n\nPhone: " + PhoneNumberUtils.formatNumber(mRestoClicked.getPhone());
                                     strMessage += " \nYelp page: " + mRestoClicked.getYelp();
-                                    if (mRestoClicked.getFavorite() == 1){
-                                        strMessage += "\n[This is one of my favorite restaurants]";
-                                    }
-                                    strMessage += "\n\nPowered by Favorite Restaurants on Android by Adam Gerber";
+                                    strMessage += " \nCategory: " + mRestoClicked.getCategory();
+                                    strMessage += "\n\nPowered by proPlaces on Android by Adam Gerber";
                                     favActionUtility.share(strSubject, strMessage );
                                     break;
 

@@ -19,12 +19,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,10 +55,14 @@ public class TabEdit extends Fragment {
     private ScrollView mRootViewGroup;
     private EditText mNameField, mCityField, mAddressField, mPhoneField, mYelpField;
     private TextView mPhoneText, mAddressText, mYelpText;
+    private Spinner mCategory;
     private Button  mSaveButton, mCancelButton;
     //private CheckBox mCheckFavorite;
    // private View mViewFavorite;
     private ImageView mPhotoView;
+    private String[] mCategories;
+    private String mCategoryString;
+    private MainActivity mainActivity;
 
     //the restaurant passed into this activity during edit operation
     private Restaurant mRestaurant;
@@ -74,6 +81,7 @@ public class TabEdit extends Fragment {
 
 
         mItemid = ((MainActivity)getActivity()).getRecentIdClicked();
+        mainActivity = (MainActivity)getActivity();
 
         //open the db adapter for db operations
         mDbAdapter = new RestosDbAdapter(v.getContext());
@@ -105,6 +113,52 @@ public class TabEdit extends Fragment {
         mYelpField = (EditText) v.findViewById(R.id.restaurant_yelp);
        // mExtractButton = (Button) v.findViewById(R.id.extract_yelp_button);
 
+        mCategory = (Spinner) v.findViewById(R.id.view_spin);
+        mCategories = new String[10];
+        mCategories[0] = "Food";
+        mCategories[1] = "Sports";
+        mCategories[2] = "Nature";
+        mCategories[3] = "Culture";
+        mCategories[4] = "Arts";
+        mCategories[5] = "Nightlife";
+        mCategories[6] = "Shopping";
+        mCategories[7] = "Services";
+        mCategories[8] = "Travel";
+        mCategories[9] = "Other";
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+
+                //context
+                getActivity(),
+                //view: layout you see when the spinner is closed
+                R.layout.spinner_closed,
+                //model: the array of Strings
+                mCategories
+        );
+        arrayAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+
+        mCategory.setAdapter(arrayAdapter);
+        mCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (parent.getId()) {
+
+                    case R.id.view_spin:
+                        //define behavior here
+                        //PrefsMgr.setString(this, FOR, extractCodeFromCurrency((String)mForSpinner.getSelectedItem()));
+                        mCategoryString = mCategories[mCategory.getSelectedItemPosition()];
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         mImm = (InputMethodManager) getActivity().getSystemService(
                 Context.INPUT_METHOD_SERVICE);
@@ -134,7 +188,7 @@ public class TabEdit extends Fragment {
             public void onClick(View view) {
                 saveRecord();
                 ((MainActivity) getActivity()).goToTab(0);
-                Toast.makeText(getActivity(), "Update successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActivity, "Update successfully", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -203,6 +257,7 @@ public class TabEdit extends Fragment {
            // mCheckFavorite.setChecked(mRestaurant.getFavorite() == 1);
             //change the "save" button label to "update"
             mSaveButton.setText("Update");
+            mCategory.setSelection(findPositionGivenCode(mRestaurant.getCategory(), mCategories));
 
             //set the root view group to light blue to indicate editing
             //mRootViewGroup.setBackgroundColor(getResources().getColor(R.color.light_blue));
@@ -244,7 +299,7 @@ public class TabEdit extends Fragment {
             //no id is required because the sqlite database manages the ids for us
             if (mRestaurant == null) {
                 Restaurant restoNew = new Restaurant(
-                        0,
+                        mCategories[mCategory.getSelectedItemPosition()],
                        // mCheckFavorite.isChecked() ? 1 : 0,
                         mNameField.getText().toString(),
                         mCityField.getText().toString(),
@@ -259,7 +314,7 @@ public class TabEdit extends Fragment {
             } else {
                 Restaurant restoEdit = new Restaurant(
                         mRestaurant.getId(),
-                        0,
+                        mCategories[mCategory.getSelectedItemPosition()],
                        // mCheckFavorite.isChecked() ? 1 : 0,
                         mNameField.getText().toString(),
                         mCityField.getText().toString(),
@@ -453,6 +508,7 @@ public class TabEdit extends Fragment {
             //change the "save" button label to "update"
             mSaveButton.setText("Update");
 
+            mCategory.setSelection(findPositionGivenCode(mRestaurant.getCategory(), mCategories));
             //set the root view group to light blue to indicate editing
             //mRootViewGroup.setBackgroundColor(getResources().getColor(R.color.light_blue));
             //toggle the color view green or orange
@@ -545,6 +601,14 @@ public class TabEdit extends Fragment {
     }
 
 
+    private int findPositionGivenCode(String code, String[] categories){
+        for(int i = 0; i < categories.length; i++){
+            if(categories[i].equalsIgnoreCase(code)){
+                return i;
+            }
+        }
+        return 0;
+    }
 
 
 

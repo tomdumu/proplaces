@@ -59,7 +59,7 @@ public class RestosSimpleCursorAdapter extends SimpleCursorAdapter {
 
             holder.nName = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_NAME);
             holder.nCity = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_CITY);
-            holder.nFav = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_FAV);
+            holder.nCat = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_CAT);
             holder.nNiv = cursor.getColumnIndexOrThrow(RestosDbAdapter.COL_IMG_URL);
 
             holder.viewImportant =  view.findViewById(R.id.list_tab);
@@ -75,7 +75,7 @@ public class RestosSimpleCursorAdapter extends SimpleCursorAdapter {
         holder.textViewCity.setText(cursor.getString(holder.nCity));
         holder.networkImageView.setImageUrl(cursor.getString(holder.nNiv), mImageLoader);
 
-        if (cursor.getInt(holder.nFav) > 0)
+        if (cursor.getInt(holder.nCat) > 0)
             holder.viewImportant.setBackgroundColor(context.getResources().getColor(R.color.orange));
         else
             holder.viewImportant.setBackgroundColor(context.getResources().getColor(R.color.green));
@@ -88,7 +88,7 @@ public class RestosSimpleCursorAdapter extends SimpleCursorAdapter {
 
         int nName;
         int nCity;
-        int nFav;
+        int nCat;
         int nNiv;
 
 

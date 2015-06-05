@@ -183,13 +183,6 @@
                         android:text="Yelp page:"
                         android:textColor="@color/black"
                         />
-
-                    <TextView
-                        style="?android:listSeparatorTextViewStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="favorite"
-                        />
                     <TextView
                         style="?android:listSeparatorTextViewStyle"
                         android:layout_width="match_parent"
@@ -236,48 +229,16 @@
                         android:singleLine="true"
                         android:textSize="14sp"
                         />
-                    <EditText
-                        android:id="@+id/text_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="category..."
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:textSize="14sp"
-                        />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-
-                        <CheckBox
-                            android:id="@+id/check_favorite"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="20"
-                            android:gravity="top"
-                            android:singleLine="true"
-                            android:textSize="14sp"
-
-
-                            />
-
-                        <View
-                            android:id="@+id/view_favorite"
+                        <Spinner
+                            android:id="@+id/text_category"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_margin="10dp"
-                            android:layout_weight="80">
-
-                        </View>
-
-
+                            android:layout_weight="100"/>
                     </LinearLayout>
-
-
-
-
 
                 </LinearLayout>
 
