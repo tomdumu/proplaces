@@ -14,9 +14,11 @@ public class YelpResultsData {
 
         public String name;
         public String url;
+        public List<List<String>> categories;
         public String phone;
         public Location location;
         public String rating_img_url;
+
 
         public class Location {
             public List<String> address;

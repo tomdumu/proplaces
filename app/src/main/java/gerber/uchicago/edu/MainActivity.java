@@ -3,17 +3,16 @@ package gerber.uchicago.edu;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneNumberUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -23,31 +22,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-
-import java.util.List;
 
 import gerber.uchicago.edu.sound.SoundVibeUtils;
 
 /**
  * Created by Edwin on 15/02/2015.
  */
-public class MainActivity extends ActionBarActivity implements Tab2.OnTab2InteractionListener, ViewPager.OnPageChangeListener, android.support.v7.view.ActionMode.Callback {
+public class MainActivity extends ActionBarActivity implements TabList.OnTab2InteractionListener, ViewPager.OnPageChangeListener, android.support.v7.view.ActionMode.Callback {
 
     // Declaring Your View and Variables
-    private static final String VERY_FIRST_LOAD_MAIN = "our_very_first_load_";
+    public static final String VERY_FIRST_LOAD_MAIN = "our_very_first_load_999";
     public static final String BOOLEAN_ARRAY_KEY = "boolean_array_key";
-    public String mCategory;
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
@@ -55,9 +45,28 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
     int mNumboftabs = 4;
     ActionBar actionBar;
 
+    private   int mRecentIdClicked;
+
+
+    public enum Tab {
+        LIST(0), GRID(1), EDIT(2), NEW(3);
+
+        private int numVal;
+
+       private  Tab(int numVal) {
+            this.numVal = numVal;
+        }
+
+        public int getNumVal() {
+            return numVal;
+        }
+    }
+
     ActionMode mActionMode;
     boolean bButtonArray[] = new boolean[3];
     SharedPreferences mPreferences;
+
+
 
 
     //private Menu mMenu;
@@ -70,10 +79,20 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
+
+
+        //Jennifer Um's code
+        // Creating The ViewPagerAdapter and Passing Fragment Manager, mCharSequences fot the Tabs and Number Of Tabs.
+        adapter = new ViewPagerAdapter(this, getSupportFragmentManager(),
+                mCharSequences, mNumboftabs);
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
 
 
         // create our manager instance after the content view is set
@@ -81,12 +100,7 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
         // enable status bar tint
         mTintManager.setStatusBarTintEnabled(true);
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, mCharSequences fot the Tabs and Number Of Tabs.
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), mCharSequences, mNumboftabs);
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
 
-        pager.setAdapter(adapter);
 
 
         // Assiging the Sliding Tab Layout View
@@ -123,9 +137,11 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
                     bButtonArray[nC] = false;
                 }
             }
+            Intent itn = new Intent(this,TutorialActivity.class);
+            startActivity(itn);
 
             //set the flag in preferences so that this block will never be called again.
-           // mPreferences.edit().putBoolean(VERY_FIRST_LOAD_MAIN, false).commit();
+          //  mPreferences.edit().putBoolean(VERY_FIRST_LOAD_MAIN, false).commit();
         } else {
 
             //get it from the prefs
@@ -135,6 +151,9 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
 
 
     }
+
+
+
 
     private void inflateActionBar(ActionBar bar, int pos) {
 
@@ -214,15 +233,11 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
                     vx.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mCategory = "Sports";
                             dialog.dismiss();
                         }
                     });
 
 
-                }
-                else{
-                    mCategory = null;
                 }
 
 
@@ -252,6 +267,8 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
 
 
     }
+
+
 
 
     private void toggleActionBarButton(int pos, final boolean checked) {
@@ -317,7 +334,7 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
     @Override
     public void onPageSelected(int position) {
 
-        SoundVibeUtils.playSound(this, R.raw.swish);
+      //  SoundVibeUtils.playSound(this, R.raw.swish);
         switch (position) {
             case 0:
             case 1:
@@ -374,6 +391,26 @@ public class MainActivity extends ActionBarActivity implements Tab2.OnTab2Intera
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
+
+    }
+
+    public int getRecentIdClicked() {
+        return mRecentIdClicked;
+    }
+
+    //overloaded
+    public void goToTab( int tabNum) {
+        adapter.notifyDataSetChanged();
+        pager.setCurrentItem(tabNum);
+
+    }
+
+    //overloaded
+    public void goToTab( int itemID, int tabNum) {
+
+        mRecentIdClicked = itemID;
+        adapter.notifyDataSetChanged();
+        pager.setCurrentItem(tabNum);
 
     }
 

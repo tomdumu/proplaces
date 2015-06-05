@@ -2,67 +2,67 @@
 <items version="2" >
 
     <item
-        jar="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/classes-2e9ba1c5bcaf18e321ad85978e32c5d6f7972211.jar" />
-    </item>
-    <item
-        jar="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/classes-da0638173b5b0577d0053ee97766bcc27da12f33.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/classes-4a1d38e6e5a82b381dbae1c03e82dc4c82d1c620.jar" />
     </item>
     <item
         jar="/Users/slim/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-b7bfe71a6301288d8a41c07d7cb3afaeb540a89a.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-b7bfe71a6301288d8a41c07d7cb3afaeb540a89a.jar" />
+    </item>
+    <item
+        jar="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-f8bcf4a28e8e4d31ba6a2ede885920714987a046.jar" />
     </item>
     <item
         jar="/Users/slim/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.16/d8f5b9114ebe0f76de7fbf55e950540959ce4ff8/library-1.0.16.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="d8f5b9114ebe0f76de7fbf55e950540959ce4ff8">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/library-1.0.16-946a207dff3e402d88637f23eff28e56f558ff8a.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/library-1.0.16-946a207dff3e402d88637f23eff28e56f558ff8a.jar" />
+    </item>
+    <item
+        jar="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/classes-f5191054160e2feb8f69514b99c10096d2a203db.jar" />
     </item>
     <item
         jar="/Users/slim/.gradle/caches/modules-2/files-2.1/org.scribe/scribe/1.1.0/242916cd352ddf8a6df60f63fb0c1a2b113af9a7/scribe-1.1.0.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="242916cd352ddf8a6df60f63fb0c1a2b113af9a7">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/scribe-1.1.0-70fca1b8cc51f95d7284b5a4159af2e0dd2343f5.jar" />
-    </item>
-    <item
-        jar="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-603c71147f90cd8f3a6413bfa81afbf74b2bc601.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/scribe-1.1.0-70fca1b8cc51f95d7284b5a4159af2e0dd2343f5.jar" />
     </item>
     <item
         jar="/Users/slim/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="a60a5e993c98c864010053cb901b7eab25306568">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/gson-2.2.4-7cc0063dd3ad10a67c900584dacae388ab48c70e.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/gson-2.2.4-7cc0063dd3ad10a67c900584dacae388ab48c70e.jar" />
     </item>
     <item
         jar="/Users/slim/.gradle/caches/modules-2/files-2.1/com.readystatesoftware.systembartint/systembartint/1.0.3/de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287/systembartint-1.0.3.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/systembartint-1.0.3-57dedbb85cbabfe78c3068608a66d3e5e893f093.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/systembartint-1.0.3-57dedbb85cbabfe78c3068608a66d3e5e893f093.jar" />
     </item>
     <item
         jar="/Users/slim/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.4/4216af16d38465bbab0f3dff8efa14204f7a399a/commons-codec-1.4.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="4216af16d38465bbab0f3dff8efa14204f7a399a">
-        <dex dex="/Users/slim/Downloads/csgerber-proplaces-d3bea4e49b56/app/build/intermediates/pre-dexed/debug/commons-codec-1.4-57e351049e85eff929ea88251f3b2ca2796ba44b.jar" />
+        <dex dex="/Users/slim/Downloads/csgerber-proplaces-5301e2f95509/app/build/intermediates/pre-dexed/debug/commons-codec-1.4-57e351049e85eff929ea88251f3b2ca2796ba44b.jar" />
     </item>
 
 </items>

@@ -4,12 +4,10 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.telephony.PhoneNumberUtils;
 import android.view.ActionMode;
@@ -20,9 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -30,17 +25,13 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import gerber.uchicago.edu.Restaurant;
 
-import gerber.uchicago.edu.R;
 import gerber.uchicago.edu.db.RestosDbAdapter;
 import gerber.uchicago.edu.db.RestosSimpleCursorAdapter;
-import gerber.uchicago.edu.dummy.DummyContent;
 import gerber.uchicago.edu.sound.SoundVibeUtils;
 
 
-public class Tab2 extends Fragment  {
+public class TabList extends Fragment  {
 
     //private ListView mListView;
     private RestosDbAdapter mDbAdapter;
@@ -48,9 +39,8 @@ public class Tab2 extends Fragment  {
 
     private SharedPreferences mPreferences;
     private static final String SORT_ORDER = "sort_order";
-    private static final String VERY_FIRST_LOAD = "our_very_first_load_";
+   // private static final String VERY_FIRST_LOAD = "our_very_first_load_3";
     private String mSortOrder;
-    private String mCategory;
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,8 +66,8 @@ public class Tab2 extends Fragment  {
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static Tab2 newInstance(String param1, String param2) {
-        Tab2 fragment = new Tab2();
+    public static TabList newInstance(String param1, String param2) {
+        TabList fragment = new TabList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,7 +79,7 @@ public class Tab2 extends Fragment  {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public Tab2() {
+    public TabList() {
     }
 
     @Override
@@ -116,7 +106,7 @@ public class Tab2 extends Fragment  {
         // Set the adapter
         mListView = (ListView) view.findViewById(R.id.reminders_list_view);
       //  mListView = (AbsListView) view.findViewById(R.id.reminders_list_view);
-     //  mListView.setAdapter(mAdapter);
+       mListView.setAdapter(mAdapter);
 
 
         super.onCreate(savedInstanceState);
@@ -134,12 +124,12 @@ public class Tab2 extends Fragment  {
         mDbAdapter.open();
 
         //get the value associated with "very_first_load";  return true if there is no value in SharedPreferences (will happen on the very first time only)
-        boolean bFirstLoad = mPreferences.getBoolean(VERY_FIRST_LOAD, true);
+        boolean bFirstLoad = mPreferences.getBoolean(MainActivity.VERY_FIRST_LOAD_MAIN, true);
         if (bFirstLoad) {
 
             mDbAdapter.insertSomeRestos();
             //set the flag in preferences so that this block will never be called again.
-            mPreferences.edit().putBoolean(VERY_FIRST_LOAD, false).commit();
+            mPreferences.edit().putBoolean(MainActivity.VERY_FIRST_LOAD_MAIN, false).commit();
         }
 
         mSortOrder = mPreferences.getString(SORT_ORDER, null);
@@ -149,13 +139,15 @@ public class Tab2 extends Fragment  {
         //from columns defined in the db
         String[] from = new String[]{
                 RestosDbAdapter.COL_NAME,
-                RestosDbAdapter.COL_CITY
+                RestosDbAdapter.COL_CITY,
+                RestosDbAdapter.COL_ADDRESS
         };
 
         //to the ids of views in the layout
         int[] to = new int[]{
                 R.id.list_text,
-                R.id.list_city
+                R.id.list_city,
+                R.id.list_address
         };
 
         mCursorAdapter = new RestosSimpleCursorAdapter(
@@ -227,9 +219,12 @@ public class Tab2 extends Fragment  {
                             switch (position) {
                                 case 0:
                                     //edit
-                                    Intent intent = new Intent(getActivity(), EditRestoActiviry.class);
-                                    intent.putExtra("resto_bundle_key", mRestoClicked);
-                                    startActivity(intent);
+                                   // Intent intent = new Intent(getActivity(), EditRestoActivity.class);
+                                  //  intent.putExtra("resto_bundle_key", mRestoClicked);
+                                   // startActivity(intent);
+                                    ((MainActivity)getActivity()).goToTab( mIdClicked, 2);
+
+
                                     break;
                                 case 1:
                                     //share
@@ -418,7 +413,7 @@ public class Tab2 extends Fragment  {
     public void onResume() {
         super.onResume();
         mDbAdapter.open();
-        //mDbAdapter.insertSomeRestos();
+        // mDbAdapter.insertSomeRestos();
         mCursorAdapter.changeCursor(mDbAdapter.fetchAllRestos(getSortOrder()));
 
     }

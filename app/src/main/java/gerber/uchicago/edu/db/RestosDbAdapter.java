@@ -48,7 +48,7 @@ public class RestosDbAdapter {
 
     private static final String DATABASE_NAME = "dba_favr";
     private static final String SQLITE_TABLE = "tbl_favr";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     private final Context mCtx;
 

@@ -51,7 +51,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/dark_grey"
                     android:scaleType="fitXY"
-                    android:src="@drawable/gear"/>
+                    android:src="@drawable/gear_dark"/>
 
             </LinearLayout>
 

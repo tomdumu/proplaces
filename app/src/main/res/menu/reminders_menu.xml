@@ -2,31 +2,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.apress.gerber.favrestos.app.RemindersActivity" >
-    <item android:id="@+id/action_new"
-        android:title="new Restaurant"
-        android:orderInCategory="100"
-        android:icon="@android:drawable/ic_menu_add"
-        app:showAsAction="always" />
-    <item android:id="@+id/action_new_overflow"
-        android:title="new Restaurant"
-        android:orderInCategory="150"
-        app:showAsAction="never" />
-    <item android:id="@+id/action_sort_name"
-        android:title="sort by name"
-        android:orderInCategory="200"
-        app:showAsAction="never" />
-    <item android:id="@+id/action_sort_fav"
-        android:title="sort by favorite"
-        android:orderInCategory="300"
-        app:showAsAction="never" />
-    <item android:id="@+id/action_sort_none"
-        android:title="no sort"
-        android:orderInCategory="400"
-        app:showAsAction="never" />
-    <item android:id="@+id/action_exit"
-        android:title="exit"
-        android:orderInCategory="500"
-        app:showAsAction="never" />
+    <item android:id="@+id/action_one"
+          android:title=""
+          android:orderInCategory="100"
+          android:layout_gravity="left"
+          android:icon="@android:drawable/ic_menu_add"
+          app:showAsAction="always" />
+
+    <item android:id="@+id/action_two"
+          android:title=""
+          android:orderInCategory="200"
+          android:icon="@android:drawable/ic_menu_upload"
+          app:showAsAction="always" />
+
+    <item android:id="@+id/action_three"
+          android:title=""
+          android:layout_gravity="right"
+          android:orderInCategory="300"
+          android:icon="@android:drawable/ic_menu_agenda"
+          app:showAsAction="always" />
+
 
 
 </menu>

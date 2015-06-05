@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:id="@+id/data_root_view_group"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#CCC"
-    >
 
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/data_root_view_group"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
     <LinearLayout
 
         android:layout_width="fill_parent"
@@ -192,8 +190,13 @@
                         android:layout_height="wrap_content"
                         android:text="favorite"
                         />
+                    <TextView
+                        style="?android:listSeparatorTextViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="category"
+                        />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="150dp"
                     android:layout_height="150dp"
@@ -233,6 +236,15 @@
                         android:singleLine="true"
                         android:textSize="14sp"
                         />
+                    <EditText
+                        android:id="@+id/text_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="category..."
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textSize="14sp"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -262,6 +274,9 @@
 
 
                     </LinearLayout>
+
+
+
 
 
                 </LinearLayout>
@@ -299,5 +314,6 @@
                 />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
 
+
+</ScrollView>

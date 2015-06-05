@@ -1,5 +1,6 @@
 package gerber.uchicago.edu;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,14 +8,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -34,15 +36,22 @@ import java.util.ArrayList;
 
 import gerber.uchicago.edu.db.RestosDbAdapter;
 import gerber.uchicago.edu.yelp.Yelp;
+import gerber.uchicago.edu.CategoryManager;
 
-public class EditRestoActiviry extends ActionBarActivity {
+/**
+ * Created by Edwin on 15/02/2015.
+ */
+public class TabNew extends Fragment {
     private ScrollView mRootViewGroup;
     private EditText mNameField, mCityField, mAddressField, mPhoneField, mYelpField;
     private TextView mPhoneText, mAddressText, mYelpText;
+    private TextView mCategory;
     private Button mExtractButton, mSaveButton, mCancelButton;
     private CheckBox mCheckFavorite;
     private View mViewFavorite;
     private ImageView mPhotoView;
+    private MainActivity main;
+    private CategoryManager categoryManger;
 
     //the restaurant passed into this activity during edit operation
     private Restaurant mRestaurant;
@@ -66,112 +75,97 @@ public class EditRestoActiviry extends ActionBarActivity {
         this.mYelpTaskCallback = yelpTaskCallback;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_resto);
-    }
-
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit_resto, menu);
-        //open the db adapter for db operations
-        mDbAdapter = new RestosDbAdapter(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v =inflater.inflate(R.layout.frag_scroll_layout_new,container,false);
+
+        main = (MainActivity) getActivity();
+        categoryManger = new CategoryManager(getActivity());
+
+        mDbAdapter = new RestosDbAdapter(getActivity());
         mDbAdapter.open();
 
-        //fetch the restaurant that was passed into this activity upon edit.
-        //if this activity was called from a new restaurant request, the result assigned to mRestaurant will be null
-        mRestaurant = (Restaurant) getIntent().getSerializableExtra("resto_bundle_key");
+        //fetch the restaurant that was passed into this fragment upon edit.
+        //if this was called from a new restaurant request, the result assigned to mRestaurant will be null
 
-
-        mRootViewGroup = (ScrollView) findViewById(R.id.data_root_view_group);
-        mNameField = (EditText) findViewById(R.id.restaurant_name);
-        mCityField = (EditText) findViewById(R.id.restaurant_city);
+        mRootViewGroup = (ScrollView) v.findViewById(R.id.data_root_view_group);
+        mNameField = (EditText) v.findViewById(R.id.restaurant_name);
+        mCityField = (EditText) v.findViewById(R.id.restaurant_city);
 
         //each required field must monitor itself and other text field
         mNameField.addTextChangedListener(new RequiredEditWatcher(mCityField));
         mCityField.addTextChangedListener(new RequiredEditWatcher(mNameField));
 
-        mAddressField = (EditText) findViewById(R.id.restaurant_address);
-        mPhoneField = (EditText) findViewById(R.id.restaurant_phone);
-        mYelpField = (EditText) findViewById(R.id.restaurant_yelp);
-        mExtractButton = (Button) findViewById(R.id.extract_yelp_button);
+        mAddressField = (EditText) v.findViewById(R.id.restaurant_address);
+        mPhoneField = (EditText) v.findViewById(R.id.restaurant_phone);
+        mYelpField = (EditText) v.findViewById(R.id.restaurant_yelp);
+        mExtractButton = (Button) v.findViewById(R.id.extract_yelp_button);
         mExtractButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new YelpSearchTask().execute(mNameField.getText().toString(), mCityField.getText().toString());
                 //hide soft keyboard
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mCityField.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(mNameField.getWindowToken(), 0);
             }
         });
-        mSaveButton = (Button) findViewById(R.id.save_data_button);
+        mSaveButton = (Button) v.findViewById(R.id.save_data_button);
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //check to see if required fields are populated - this is a constraint in the db
                 if (mCityField.getText().toString().equals("") || mCityField.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(EditRestoActiviry.this,
+                    Toast toast = Toast.makeText(getActivity(),
                             "You must populate Search Name and Search City fields",
                             Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
+                    Restaurant restoNew = new Restaurant(
+                            mCheckFavorite.isChecked() ? 1 : 0,
+                            mNameField.getText().toString(),
+                            mCityField.getText().toString(),
+                            mAddressField.getText().toString(),
+                            mPhoneField.getText().toString(),
+                            mYelpField.getText().toString(),
+                            mStrImageUrl
+                    );
+                    mDbAdapter.createResto(restoNew);
+                    mCheckFavorite.setChecked(false);
+                    mNameField.setText("");
+                    mCityField.setText("");
+                    mAddressField.setText("");
+                    mPhoneField.setText("");
+                    mYelpField.setText("");
+                    mStrImageUrl = "";
 
-                    //if no data was passed into this Activity, mRestaurant will be null. Create a new restaurant
-                    //no id is required because the sqlite database manages the ids for us
-                    if (mRestaurant == null) {
-                        Restaurant restoNew = new Restaurant(
-                                mCheckFavorite.isChecked() ? 1 : 0,
-                                mNameField.getText().toString(),
-                                mCityField.getText().toString(),
-                                mAddressField.getText().toString(),
-                                mPhoneField.getText().toString(),
-                                mYelpField.getText().toString(),
-                                mStrImageUrl
-                        );
-                        mDbAdapter.createResto(restoNew);
-                        //if we had passed in a restaurant, then we're in edit-mode. Edit the restaurant
-                        //notice that we are calling the 7-arg constructor with the id
-                    } else {
-                        Restaurant restoEdit = new Restaurant(
-                                mRestaurant.getId(),
-                                mCheckFavorite.isChecked() ? 1 : 0,
-                                mNameField.getText().toString(),
-                                mCityField.getText().toString(),
-                                mAddressField.getText().toString(),
-                                mPhoneField.getText().toString(),
-                                mYelpField.getText().toString(),
-                                mStrImageUrl
-                        );
-                        mDbAdapter.updateResto(restoEdit);
+                    main.goToTab(0);
+                    //if we had passed in a restaurant, then we're in edit-mode. Edit the restaurant
+                    //notice that we are calling the 7-arg constructor with the id
 
-                    }
 
-                    finish();
-
+                    Toast.makeText(main, "Save Successfully!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-        mCheckFavorite = (CheckBox) findViewById(R.id.check_favorite);
+        mCheckFavorite = (CheckBox) v.findViewById(R.id.check_favorite);
         mCheckFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 toggleFavoriteView(isChecked);
             }
         });
-        mCancelButton = (Button) findViewById(R.id.cancel_action_button);
+        mCancelButton = (Button) v.findViewById(R.id.cancel_action_button);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                //finish();
+                main.goToTab(0);
             }
         });
-        mViewFavorite = findViewById(R.id.view_favorite);
+        mViewFavorite = v.findViewById(R.id.view_favorite);
         mViewFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,10 +176,11 @@ public class EditRestoActiviry extends ActionBarActivity {
                 }
             }
         });
-        mPhoneText = (TextView) findViewById(R.id.text_phone);
-        mYelpText = (TextView) findViewById(R.id.text_yelp);
-        mAddressText = (TextView) findViewById(R.id.text_address);
+        mPhoneText = (TextView) v.findViewById(R.id.text_phone);
+        mYelpText = (TextView) v.findViewById(R.id.text_yelp);
+        mAddressText = (TextView) v.findViewById(R.id.text_address);
 
+        mCategory = (TextView) v.findViewById(R.id.text_category);
 
         mPhoneText.setEnabled(false);
         mPhoneText.setOnClickListener(new DetailsEditWatcher());
@@ -199,7 +194,7 @@ public class EditRestoActiviry extends ActionBarActivity {
         mYelpText.setOnClickListener(new DetailsEditWatcher());
         mYelpField.addTextChangedListener(new DetailsEditWatcher(mYelpText));
 
-        mPhotoView = (ImageView) findViewById(R.id.restaurant_image_view);
+        mPhotoView = (ImageView) v.findViewById(R.id.restaurant_image_view);
 
         //default behavior is to create a new restaurant which is indicated by green
         mRootViewGroup.setBackgroundColor(getResources().getColor(R.color.light_green));
@@ -238,8 +233,11 @@ public class EditRestoActiviry extends ActionBarActivity {
 
 
         }
-        return true;
+
+
+        return v;
     }
+
 
     private void toggleFavoriteView(boolean bFavorite) {
         if (bFavorite) {
@@ -250,23 +248,10 @@ public class EditRestoActiviry extends ActionBarActivity {
 
     }
 
-    //will need this later for testing
     public YelpResultsData getYelpResultsData() {
         return mYelpResultsData;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_close) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void updateButtons(CharSequence charSequence, String strOther) {
         if (!charSequence.toString().trim().equalsIgnoreCase("") && !strOther.trim().equalsIgnoreCase("")) {
@@ -355,7 +340,7 @@ public class EditRestoActiviry extends ActionBarActivity {
         @Override
         public void onClick(View v) {
 
-            FavActionUtility favActionUtility = new FavActionUtility(EditRestoActiviry.this);
+            FavActionUtility favActionUtility = new FavActionUtility(getActivity());
 
             try {
                 switch (v.getId()) {
@@ -378,19 +363,6 @@ public class EditRestoActiviry extends ActionBarActivity {
     }
 
 
-    //open and close the db adapter when we don't need it
- /*   @Override
-    protected void onPause() {
-        super.onPause();
-        mDbAdapter.close();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mDbAdapter.open();
-    }
-*/
     private void fetchPhoto(ImageView imageView) {
 
         String strUrl = String.format("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s%s&imgsz=small&imgtype=photo",
@@ -443,7 +415,7 @@ public class EditRestoActiviry extends ActionBarActivity {
         protected void onPostExecute(Bitmap result) {
             if (result == null){
                 mImageView.setImageResource(R.drawable.gear);
-                Toast.makeText(EditRestoActiviry.this, "Associated image not found on google", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Associated image not found on google", Toast.LENGTH_SHORT).show();
             } else {
                 mImageView.setImageBitmap(result);
             }
@@ -461,7 +433,7 @@ public class EditRestoActiviry extends ActionBarActivity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog = new ProgressDialog(EditRestoActiviry.this);
+            progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Fetching data");
             progressDialog.setMessage("One moment please...");
             progressDialog.setCancelable(true);
@@ -501,17 +473,17 @@ public class EditRestoActiviry extends ActionBarActivity {
             mYelpResultsData = yelpResultsData;
 
             if (mYelpResultsData == null){
-                Toast.makeText(EditRestoActiviry.this, "No data for that search term", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No data for that search term", Toast.LENGTH_SHORT).show();
                 return;
             }
             ArrayList<String> stringArrayList = mYelpResultsData.getSimpleValues();
             if (stringArrayList.size() == 0) {
-                Toast.makeText(EditRestoActiviry.this, "No data for that search term", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No data for that search term", Toast.LENGTH_SHORT).show();
                 return;
             }
             Bundle bundle = new Bundle();
             bundle.putSerializable("simple_data_bundle_key", stringArrayList);
-            Intent intent = new Intent(EditRestoActiviry.this, ResultsDialogActivity.class);
+            Intent intent = new Intent(getActivity(), ResultsDialogActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, 1001);
 
@@ -523,10 +495,11 @@ public class EditRestoActiviry extends ActionBarActivity {
 
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1001) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == getActivity().RESULT_OK) {
                 //fetch the integer we passed into the dialog result which corresponds to the list position
                 int nResult = data.getIntExtra(ResultsDialogActivity.POSITION, -99);
                 if (nResult != -99) {
@@ -537,6 +510,7 @@ public class EditRestoActiviry extends ActionBarActivity {
                         mAddressField.setText(biz.location.address.get(0));
                         mPhoneField.setText(PhoneNumberUtils.formatNumber(biz.phone));
                         mYelpField.setText(biz.url);
+                        mCategory.setText(categoryManger.getCategoryFromYelpCat(biz.categories.get(0).get(1)));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -545,9 +519,15 @@ public class EditRestoActiviry extends ActionBarActivity {
                     fetchPhoto(mPhotoView);
                 }
             }
-            if (resultCode == RESULT_CANCELED) {
+            if (resultCode == getActivity().RESULT_CANCELED) {
                 //do nothing
             }
         }
     }
+
+
+
+
+
+
 }

@@ -6,9 +6,12 @@
              tools:context="gerber.uchicago.edu.ListFragment">
 
     <GridView
-        android:id="@android:id/list"
+        android:id="@+id/restaurant_grid_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
         android:numColumns="2"/>
 
     <TextView
