@@ -2,17 +2,21 @@ package gerber.uchicago.edu;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
+import android.telephony.PhoneNumberUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -23,10 +27,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import gerber.uchicago.edu.sound.SoundVibeUtils;
 
@@ -34,6 +46,14 @@ import gerber.uchicago.edu.sound.SoundVibeUtils;
  * Created by Edwin on 15/02/2015.
  */
 public class MainActivity extends ActionBarActivity implements TabList.OnTab2InteractionListener, ViewPager.OnPageChangeListener, android.support.v7.view.ActionMode.Callback {
+
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mDrawerToggle;
+    ExpandableListAdapter mDrawerList_Right;
+    ExpandableListView expandListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    String filterType = "";
 
     // Declaring Your View and Variables
     public static final String VERY_FIRST_LOAD_MAIN = "our_very_first_load_999";
@@ -150,8 +170,110 @@ public class MainActivity extends ActionBarActivity implements TabList.OnTab2Int
         inflateActionBar(actionBar, 0);
 
 
+       /* mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.drawer_icon_left_gray, R.string.abc_action_bar_home_description, R.string.abc_action_bar_home_description){
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle("111");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle("222");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };*/
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        expandListView = (ExpandableListView) findViewById(R.id.drawer_list_right);
+
+        prepareListData();
+        mDrawerList_Right = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+        expandListView.setAdapter(mDrawerList_Right);
+        expandListView.setOnItemClickListener(new DrawerItemClickListener());
+
+
     }
 
+    private void selectItem(int position) {
+        expandListView.setItemChecked(position,true);
+//        if(position==0) {
+//            Intent mIntent = new Intent();
+//            mIntent.setClass(this, SettingActivity.class);
+//            startActivity(mIntent);
+//        }
+        switch(position){
+            case 0:
+                startActivity(new Intent(this,SettingActivity.class));
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        // Adding child data
+        listDataHeader.add("Setting");
+        listDataHeader.add("All Saved Places");
+        listDataHeader.add("All Saved People");
+        listDataHeader.add("Favorites");
+        listDataHeader.add("Places Visited");
+        listDataHeader.add("More Features");
+
+        List<String> setting = new ArrayList<String>();
+        List<String> savedPlace = new ArrayList<String>();
+        List<String> savedPeople = new ArrayList<String>();
+        List<String> favorites = new ArrayList<String>();
+        List<String> visitedPlace = new ArrayList<String>();
+        List<String> more = new ArrayList<String>();
+
+
+        // Adding child data
+        // Header, Child data
+        listDataChild.put(listDataHeader.get(0), setting);
+        listDataChild.put(listDataHeader.get(1), savedPlace);
+        listDataChild.put(listDataHeader.get(2), savedPeople);
+        listDataChild.put(listDataHeader.get(3), favorites);
+        listDataChild.put(listDataHeader.get(4), visitedPlace);
+        listDataChild.put(listDataHeader.get(5), more);
+
+        //add some fake features in child list.
+        setting.add("General Setting");
+        setting.add("My Account");
+        setting.add("Information");
+
+        savedPlace.add("University of Chicago");
+        savedPlace.add("Art Museum");
+        savedPlace.add("Navy Pier");
+
+        savedPeople.add("Matt Holliday");
+        savedPeople.add("Taylor Swift");
+        savedPeople.add("Adam Gerber");
+
+        favorites.add("Alinea");
+        favorites.add("Bavette's Bar and Boeuf");
+        favorites.add("Momotaro Restaurant");
+
+        visitedPlace.add("UChicago");
+        visitedPlace.add("Navy Pier");
+        visitedPlace.add("Shedd Aquarium");
+
+        more.add("Want More? Add Here...");
+
+
+    }
+
+    private class DrawerItemClickListener implements ExpandableListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
 
 
 
@@ -205,11 +327,46 @@ public class MainActivity extends ActionBarActivity implements TabList.OnTab2Int
 
 
                 if (bButtonArray[2]) {
-
-
                     //this is just an example sound
                     SoundVibeUtils.playSound(MainActivity.this, R.raw.power_up);
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    ListView modeList = new ListView(MainActivity.this);
+
+                    final String[] stringArray = new String[]{"Food ",  //0
+                            "Sports", //1
+                            "Nature", //2
+                            "Culture",  //3
+                            "Arts",  //4
+                            "Nightlife",  //5
+                            "Shopping", //6
+                            "Services", //7
+                            "Travel", //8
+                            "Other", //9
+                    };
+
+                    ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+                    modeList.setAdapter(modeAdapter);
+                    builder.setView(modeList);
+                    final Dialog dialog = builder.create();
+
+
+                    Window window = dialog.getWindow();
+                    window.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    window.setGravity(Gravity.CENTER);
+                    dialog.setTitle("Set filter");
+                    dialog.show();
+                    modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            filterType = stringArray[position];
+                            System.out.println(filterType);
+                            dialog.dismiss();
+                        }
+                    });
+                }
+/*
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                     LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -230,13 +387,26 @@ public class MainActivity extends ActionBarActivity implements TabList.OnTab2Int
                     //  mRestoClicked = mDbAdapter.fetchRestoById(mIdClicked);
                     dialog.setTitle("Set Filter");
                     dialog.show();
+
+
                     vx.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             dialog.dismiss();
                         }
                     });
 
+
+                    Fragment newF = getFragmentManager().findFragmentById(0);
+
+
+*/
+
+
+                else{
+                    filterType = null;
+                    System.out.println("null");
 
                 }
 

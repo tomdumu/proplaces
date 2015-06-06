@@ -30,4 +30,16 @@
         <item>restaurants|Food</item>
         <item>shopping|Shopping</item>
     </string-array>
+
+
+    <string-array name="department">
+        <item>Computer Science</item>
+        <item>Physical</item>
+        <item>Mathematics</item>
+    </string-array>
+    <string-array name="department_value">
+        <item>001</item>
+        <item>002</item>
+        <item>003</item>
+    </string-array>
 </resources>

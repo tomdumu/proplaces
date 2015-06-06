@@ -44,8 +44,7 @@ public class Yelp {
         this.accessToken = new Token(TOKEN, TOKEN_SECRET);
     }
 
-
-    public YelpResultsData searchMultiple(String searchTerm, String city) {
+    public YelpResultsData searchMultiple(String searchTerm, String city, String filter) {
 
         // Execute a signed call to the Yelp service.
         OAuthService service = new ServiceBuilder().provider(YelpApi2.class).apiKey(CONSUMER_KEY).apiSecret(CONSUMER_SECRET).build();
@@ -54,8 +53,17 @@ public class Yelp {
 
         request.addQuerystringParameter("location", city);
         //request.addQuerystringParameter("category", "restaurants");
+        if (filter != null) {
+            request.addQuerystringParameter("category_filter", filter);
+            System.out.println("Adding!");
+        }
+        else{
+
+            System.out.println("Without!");
+        }
         request.addQuerystringParameter("term", searchTerm);
         request.addQuerystringParameter("limit", "20");
+       // request.send();
 
         service.signRequest(accessToken, request);
         Response response = request.send();
@@ -70,7 +78,6 @@ public class Yelp {
         }
         return mYelpSearchResult;
     }
-
 
 
 }

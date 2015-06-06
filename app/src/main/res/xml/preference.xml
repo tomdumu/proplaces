@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory android:title="Wireless">
+        <CheckBoxPreference
+            android:key="apply_fly"
+            android:title="Flight mode"
+            android:summary="Disable all wireless connection">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:key="apply_internet"
+            android:title="Internet Sharing"
+            android:summary="Disable USB Sharing Internet Connection">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:key="apply_wifi"
+            android:title="Wi-Fi"
+            android:summary="Open Wi-Fi">
+        </CheckBoxPreference>
+        <Preference
+            android:key="wifi_setting"
+            android:title="Wi-Fi Setting"
+            android:summary="Set Wireless Connections"
+            android:dependency="apply_wifi">
+        </Preference>
+        <CheckBoxPreference
+            android:key="apply_bluetooth"
+            android:title="Bluetooth"
+            android:summary="Open Bluetooth">
+        </CheckBoxPreference>
+        <EditTextPreference
+            android:key="number_edit"
+            android:title="Yout phone number">
+        </EditTextPreference>
+        <ListPreference
+            android:key="depart_value"
+            android:title="Major"
+            android:dialogTitle="Select Major"
+            android:entries="@array/department"
+            android:entryValues="@array/department_value">
+        </ListPreference>
+        <RingtonePreference
+            android:key="ring_key"
+            android:title="Ringtone"
+            android:ringtoneType="all"
+            android:showDefault="true"
+            android:showSilent="true">
+        </RingtonePreference>
+    </PreferenceCategory>
+</PreferenceScreen>

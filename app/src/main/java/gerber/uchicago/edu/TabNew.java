@@ -496,7 +496,19 @@ public class TabNew extends Fragment {
             Yelp yelpApi = new Yelp();
             YelpResultsData yelpSearchResultLocal = null;
             try {
-                yelpSearchResultLocal = yelpApi.searchMultiple(name, location);
+                String filter = null;
+                if(main.filterType != null) {
+                    String[] outer_chicago = getActivity().getResources().getStringArray(R.array.yelp_chicago);
+                    for (String item : outer_chicago) {
+                        String yelpCat = item.split("\\|")[0];
+                        String chicagoCat = item.split("\\|")[1];
+                        if (main.filterType.equalsIgnoreCase(chicagoCat)) {
+                            filter = yelpCat;
+                            break;
+                        }
+                    }
+                }
+                yelpSearchResultLocal = yelpApi.searchMultiple(name, location, filter);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffdbd2f7"
+    android:orientation="vertical"
+    android:padding="8dp">
+    <!--android:background="#000000">-->
+
+
+    <TextView
+        android:id="@+id/ListHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:textColor="#ff808cf9"
+        android:textSize="17dp"
+        />
+
+
+</LinearLayout>
